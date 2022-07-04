@@ -1,5 +1,3 @@
-package mun.ece.concurrent.assignment.three;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;

@@ -1,5 +1,3 @@
-package mun.ece.concurrent.assignment.three;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -56,7 +54,7 @@ public class RandomWeightGenerator {
 				{
 					if (Math.random() < nolinkprob)
 					{
-						randweight = (double) 0;
+						randweight = (double)0;
 						Weightoutput.write("0");
 					}
 					else
@@ -103,6 +101,8 @@ public class RandomWeightGenerator {
 					}
 				}
 			}
+
+			//Output Layer
 			for (int i = 0; i < numneurons_internallayer; i++)
 			{
 				for (int j = 0; j < numneurons_outputlayer; j++)
@@ -118,7 +118,7 @@ public class RandomWeightGenerator {
 						randweight = lowerbound + (upperbound-lowerbound)*Math.random();
 						Weightoutput.write(randweight.toString());
 					}						
-					if (j < numneurons_outputlayer)
+					if (j < numneurons_outputlayer-1)
 					{
 						Weightoutput.write(", ");
 					}
@@ -135,4 +135,9 @@ public class RandomWeightGenerator {
 		}
 	}
 
+public static void main(String[] args) 
+{
+	RandomWeightGenerator weights = new RandomWeightGenerator("temp", 3, 0, 1, 0);
+	weights.GenerateRandomWeightFile();
+}
 }

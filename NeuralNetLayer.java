@@ -1,7 +1,5 @@
-package mun.ece.concurrent.assignment.three;
-
 import java.util.ArrayList;
-import java.util.List;
+import java.util.concurrent.CyclicBarrier;
 
 // Class representing a layer in an artificial neural network
 public class NeuralNetLayer extends Thread
@@ -9,10 +7,15 @@ public class NeuralNetLayer extends Thread
 	// List of neurons in this layer
 	ArrayList<Neuron> neurons;
 
+	// Reference to previous layer
+	NeuralNetLayer previous;
+
 	// Any layer is either an input layer to the neural network, an internal layer, or an output layer
 	// to the network
-	public enum LayerType  {INPUT, INTERNAL, OUTPUT};
 	LayerType layertype;
+
+	// Cyclic Barrier
+	CyclicBarrier barrier = new CyclicBarrier(neurons.size());
 
 	// Constructor for neural network layer	
 	public NeuralNetLayer(ArrayList<Neuron> neurons, LayerType layertype)
@@ -27,7 +30,7 @@ public class NeuralNetLayer extends Thread
 		{
 			// Neurons should know whether they expect their inputs from
 			// the inputs to entire network or from outputs of previous layer
-			if (layertype == NeuralNetLayer.LayerType.INPUT)
+			if (layertype == LayerType.INPUT)
 			{
 				neurons.get(i).setInputLayer(true);
 			}
@@ -46,6 +49,5 @@ public class NeuralNetLayer extends Thread
 				e.printStackTrace();
 			}
 		}
-
 	}
 }
