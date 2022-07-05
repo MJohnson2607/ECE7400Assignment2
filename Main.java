@@ -6,11 +6,12 @@ public class Main
 {
     public static void main(String[] args)
     {
-        NeuralNetwork network = new NeuralNetwork("weights.txt");
+        NeuralNetwork network = new NeuralNetwork("weights.txt", 3);
         Matrix temp = network.getWeights();
         for (int i = 0; i < (network.lines-1); i++)
         {
             System.out.println(Arrays.toString(temp.weights[i]));
         }
+        network.run();
     }
 }

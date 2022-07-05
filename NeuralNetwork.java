@@ -8,30 +8,39 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.InputMismatchException;
 
-public class NeuralNetwork
+public class NeuralNetwork implements Runnable
 {
-    ArrayList<NeuralNetLayer> layers;
+    ArrayList<NeuralNetLayer> layers = new ArrayList<NeuralNetLayer>();
 
     int lines;
 
     Matrix weights;
 
-    public NeuralNetwork(String str)
+    public NeuralNetwork(String str, int L)
     {
-        /*for (int i = 0; i < L; i++)
-        {
-            ArrayList<Neuron> neurons = new ArrayList<Neuron>();
-            if (i == 0)
-            {
-                Neuron neuron1 = new Neuron(1);
-                Neuron neuron2 = new Neuron(1);
-                Neuron neuron3 = new Neuron(1);
-                neurons.add(neuron1);
-                neurons.add(neuron2);
-                neurons.add(neuron3);
+        layers.add(new NeuralNetLayer(LayerType.INPUT, 4));
 
-            }
-        }*/
+        layers.get(0).neurons.add(new Neuron(1));
+        layers.get(0).neurons.add(new Neuron(2));
+        layers.get(0).neurons.add(new Neuron(3));
+        layers.get(0).neurons.add(new Neuron(4));
+
+        for (int i = 0; i < L; i++)
+        {
+            layers.add(new NeuralNetLayer(LayerType.INTERNAL, 5));
+
+            layers.get(i+1).neurons.add(new Neuron(1));
+            layers.get(i+1).neurons.add(new Neuron(2));
+            layers.get(i+1).neurons.add(new Neuron(3));
+            layers.get(i+1).neurons.add(new Neuron(4));
+            layers.get(i+1).neurons.add(new Neuron(5));
+        }
+
+        layers.add(new NeuralNetLayer(LayerType.OUTPUT, 3));
+
+        layers.get(L+1).neurons.add(new Neuron(1));
+        layers.get(L+1).neurons.add(new Neuron(2));
+        layers.get(L+1).neurons.add(new Neuron(3));
 
         try {
             File f = new File(str);
@@ -51,5 +60,15 @@ public class NeuralNetwork
     public Matrix getWeights()
     {
         return weights;
+    }
+
+    @Override
+    public void run() {
+        // TODO Auto-generated method stub
+        for (NeuralNetLayer LYR : layers)
+        {
+            LYR.run();
+        }
+
     }
 }

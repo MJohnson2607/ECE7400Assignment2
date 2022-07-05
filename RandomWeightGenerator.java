@@ -137,7 +137,7 @@ public class RandomWeightGenerator {
 
 public static void main(String[] args) 
 {
-	RandomWeightGenerator weights = new RandomWeightGenerator("temp", 5, 0, 1, 0);
+	RandomWeightGenerator weights = new RandomWeightGenerator("temp", 3, 0, 1, 0);
 	weights.GenerateRandomWeightFile();
 }
 }

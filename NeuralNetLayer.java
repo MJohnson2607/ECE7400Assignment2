@@ -5,7 +5,7 @@ import java.util.concurrent.CyclicBarrier;
 public class NeuralNetLayer extends Thread
 {
 	// List of neurons in this layer
-	ArrayList<Neuron> neurons;
+	ArrayList<Neuron> neurons = new ArrayList<Neuron>();
 
 	// Reference to previous layer
 	NeuralNetLayer previous;
@@ -15,17 +15,22 @@ public class NeuralNetLayer extends Thread
 	LayerType layertype;
 
 	// Cyclic Barrier
-	CyclicBarrier barrier = new CyclicBarrier(neurons.size());
+	CyclicBarrier barrier;
+
+	// Input Array
+	double[] inputs;
 
 	// Constructor for neural network layer	
-	public NeuralNetLayer(ArrayList<Neuron> neurons, LayerType layertype)
+	public NeuralNetLayer(LayerType layertype, int L)
 	{
-		this.neurons = neurons;
 		this.layertype = layertype;
+		this.barrier = new CyclicBarrier(L);
 	}
 		
 	@Override
-	public void run() {
+	public void run()
+	{
+		System.out.println("\n imagine");
 		for (int i = 0; i < neurons.size(); i++)
 		{
 			// Neurons should know whether they expect their inputs from
@@ -40,7 +45,7 @@ public class NeuralNetLayer extends Thread
 			}
 
 			// Start threads for neurons in this layer
-			neurons.get(i).start();
+			neurons.get(i).run();
 			try {
 				// This may not be necesary - good to slow things down a bit
 				Thread.sleep(5);

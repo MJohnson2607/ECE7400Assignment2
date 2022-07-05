@@ -1,4 +1,4 @@
-public class Neuron 
+public class Neuron implements Runnable
 {
     boolean isInputLayer;
     int id, layer;
@@ -16,8 +16,11 @@ public class Neuron
         this.isInputLayer = input;
     }
 
-    public void start()
+    @Override
+    public void run()
     {
+        System.out.println("\nDragons");
+        // TODO Auto-generated method stub
         
     }
 }
