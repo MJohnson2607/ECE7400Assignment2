@@ -5,12 +5,10 @@ public class Neuron
     double output;
     double[] inputWeights;
 
-    public Neuron(int ID, int LYR, double[] W)
+    public Neuron(int ID)
     {
         this.id = ID;
-        this.layer = LYR;
         this.output = 0;
-        this.inputWeights = W;
     }
 
     public void setInputLayer(boolean input)

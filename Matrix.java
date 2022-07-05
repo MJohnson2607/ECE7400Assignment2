@@ -17,9 +17,9 @@ public class Matrix
 
     public Matrix(int R, int C, File F) throws FileNotFoundException
     {
-        this.weights = new double[R][C];
         this.rows = R;
         this.cols = C;
+        this.weights = new double[this.rows-1][this.cols];
         String str;
         String[] w;
         try (Scanner reader = new Scanner(F)) {
@@ -28,7 +28,7 @@ public class Matrix
             {
                 try {
                     str = reader.nextLine();
-                    if (tracker >= 1 && tracker <= 19)
+                    if (tracker >= 1 && tracker <= (this.rows-6))
                     {
                         w = str.split(",");
                         for (int j = 0; j < C; j++)
@@ -36,7 +36,7 @@ public class Matrix
                             weights[tracker-1][j] = Double.parseDouble(w[j]);
                         }
                     }
-                    else if (tracker >= 20)
+                    else if (tracker >= (R-5))
                     {
                         w = str.split(",");
                         for (int j = 0; j < (C-2); j++)
@@ -49,7 +49,7 @@ public class Matrix
                     System.out.println(e.getMessage());
                 }
                 tracker++;
-                if (tracker == 25)
+                if (tracker == this.rows)
                 {
                     break;
                 }
