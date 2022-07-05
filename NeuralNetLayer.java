@@ -26,6 +26,11 @@ public class NeuralNetLayer extends Thread
 		this.layertype = layertype;
 		this.barrier = new CyclicBarrier(L);
 	}
+
+	public void addReferencetoPrevious(NeuralNetLayer last)
+	{
+		this.previous = last;
+	}
 		
 	@Override
 	public void run()
@@ -45,7 +50,7 @@ public class NeuralNetLayer extends Thread
 			}
 
 			// Start threads for neurons in this layer
-			neurons.get(i).run();
+			neurons.get(i).start();
 			try {
 				// This may not be necesary - good to slow things down a bit
 				Thread.sleep(5);

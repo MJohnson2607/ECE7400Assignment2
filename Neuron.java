@@ -1,4 +1,4 @@
-public class Neuron implements Runnable
+public class Neuron extends Thread
 {
     boolean isInputLayer;
     int id, layer;
@@ -18,7 +18,7 @@ public class Neuron implements Runnable
 
     @Override
     public void run()
-    {
+    {   
         System.out.println("\nDragons");
         // TODO Auto-generated method stub
         

@@ -42,6 +42,11 @@ public class NeuralNetwork implements Runnable
         layers.get(L+1).neurons.add(new Neuron(2));
         layers.get(L+1).neurons.add(new Neuron(3));
 
+        for (int i = 1; i < layers.size(); i++)
+        {
+            layers.get(i).addReferencetoPrevious(layers.get(i-1));
+        }
+
         try {
             File f = new File(str);
             Path path = Paths.get(str);
