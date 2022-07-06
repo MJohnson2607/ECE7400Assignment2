@@ -5,10 +5,7 @@ import java.util.concurrent.CyclicBarrier;
 public class NeuralNetLayer extends Thread
 {
 	// List of neurons in this layer
-	ArrayList<Neuron> neurons = new ArrayList<Neuron>();
-
-	// Reference to previous layer
-	NeuralNetLayer previous;
+	Neuron[] neurons;
 
 	// Any layer is either an input layer to the neural network, an internal layer, or an output layer
 	// to the network
@@ -25,32 +22,39 @@ public class NeuralNetLayer extends Thread
 	{
 		this.layertype = layertype;
 		this.barrier = new CyclicBarrier(L);
+
+        switch (layertype) {
+        case INPUT:
+            neurons = new Neuron[]{new Neuron(1), new Neuron(2), new Neuron(3), new Neuron(4)};
+            break;
+        case INTERNAL:
+            neurons = new Neuron[]{new Neuron(1), new Neuron(2), new Neuron(3), new Neuron(4), new Neuron(5)};
+            break;
+        case OUTPUT:
+            neurons = new Neuron[]{new Neuron(1), new Neuron(2), new Neuron(3)};
+            break;
+        }
 	}
 
-	public void addReferencetoPrevious(NeuralNetLayer last)
-	{
-		this.previous = last;
-	}
-		
 	@Override
 	public void run()
 	{
 		System.out.println("\n imagine");
-		for (int i = 0; i < neurons.size(); i++)
+		for (int i = 0; i < neurons.length; i++)
 		{
 			// Neurons should know whether they expect their inputs from
 			// the inputs to entire network or from outputs of previous layer
 			if (layertype == LayerType.INPUT)
 			{
-				neurons.get(i).setInputLayer(true);
+				neurons[i].setInputLayer(true);
 			}
 			else
 			{
-				neurons.get(i).setInputLayer(false);
+				neurons[i].setInputLayer(false);
 			}
 
 			// Start threads for neurons in this layer
-			neurons.get(i).start();
+			neurons[i].start();
 			try {
 				// This may not be necesary - good to slow things down a bit
 				Thread.sleep(5);

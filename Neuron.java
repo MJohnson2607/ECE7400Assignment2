@@ -4,6 +4,7 @@ public class Neuron extends Thread
     int id, layer;
     double output;
     double[] inputWeights;
+    NeuralNetLayer neuralNetLayer;
 
     public Neuron(int ID)
     {

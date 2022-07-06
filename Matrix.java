@@ -58,7 +58,7 @@ public class Matrix
         }
     }
 
-    public double[][] get()
+    public double[][] getWeights()
     {
         return this.weights;
     }

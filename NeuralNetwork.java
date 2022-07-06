@@ -15,37 +15,13 @@ public class NeuralNetwork implements Runnable
     int lines;
 
     Matrix weights;
+    static CountDownLatch[][] hiddenCountdownArray;
 
     public NeuralNetwork(String str, int L)
     {
-        layers.add(new NeuralNetLayer(LayerType.INPUT, 4));
-
-        layers.get(0).neurons.add(new Neuron(1));
-        layers.get(0).neurons.add(new Neuron(2));
-        layers.get(0).neurons.add(new Neuron(3));
-        layers.get(0).neurons.add(new Neuron(4));
-
-        for (int i = 0; i < L; i++)
-        {
-            layers.add(new NeuralNetLayer(LayerType.INTERNAL, 5));
-
-            layers.get(i+1).neurons.add(new Neuron(1));
-            layers.get(i+1).neurons.add(new Neuron(2));
-            layers.get(i+1).neurons.add(new Neuron(3));
-            layers.get(i+1).neurons.add(new Neuron(4));
-            layers.get(i+1).neurons.add(new Neuron(5));
-        }
-
-        layers.add(new NeuralNetLayer(LayerType.OUTPUT, 3));
-
-        layers.get(L+1).neurons.add(new Neuron(1));
-        layers.get(L+1).neurons.add(new Neuron(2));
-        layers.get(L+1).neurons.add(new Neuron(3));
-
-        for (int i = 1; i < layers.size(); i++)
-        {
-            layers.get(i).addReferencetoPrevious(layers.get(i-1));
-        }
+        hiddenCountdownArray = new CountDownLatch[L][5];
+        CountDownLatch[] outputCountdownArray = new CountDownLatch[3];
+        int[][] hiddenCountdownArrayvalues = new int[L][5];
 
         try {
             File f = new File(str);
@@ -59,6 +35,45 @@ public class NeuralNetwork implements Runnable
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        }
+
+        long[][] arrayWeights = getWeights();
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 5; j++) {
+                if (arrayWeights[i][j] != 0) {
+                    hiddenCountdownArrayvalues[0][j]++;
+                }
+            }
+        }
+
+        for (int l = 1; l < L; l++) {
+            for (int i = 0; i < 5; i++) {
+                for (int j = 0; j < 5; j++) {
+                    if (arrayWeights[(l*5) + i - 1][j] != 0) {
+                        hiddenCountdownArrayvalues[l][j]++;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < L; i++) {
+            for (int j = 0; j < 5; j++) {
+                hiddenCountdownArray[i][j] = new CountDownLatch(hiddenCountdownArrayvalues[i][j]);
+            }
+        }
+
+        layers.add(new NeuralNetLayer(LayerType.INPUT, 4));
+
+        for (int i = 0; i < L; i++)
+        {
+            layers.add(new NeuralNetLayer(LayerType.INTERNAL, 5));
+        }
+
+        layers.add(new NeuralNetLayer(LayerType.OUTPUT, 3));
+
+        for (int i = 1; i < layers.size(); i++)
+        {
+            layers.get(i).addReferencetoPrevious(layers.get(i-1));
         }
     }
 
