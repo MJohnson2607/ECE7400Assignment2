@@ -37,7 +37,7 @@ public class NeuralNetwork implements Runnable
             e.printStackTrace();
         }
 
-        long[][] arrayWeights = getWeights();
+        double[][] arrayWeights = weights.getWeights();
         for (int i = 0; i < 4; i++) {
             for (int j = 0; j < 5; j++) {
                 if (arrayWeights[i][j] != 0) {
@@ -62,24 +62,20 @@ public class NeuralNetwork implements Runnable
             }
         }
 
-        layers.add(new NeuralNetLayer(LayerType.INPUT, 4));
-
-        for (int i = 0; i < L; i++)
-        {
-            layers.add(new NeuralNetLayer(LayerType.INTERNAL, 5));
-        }
-
-        layers.add(new NeuralNetLayer(LayerType.OUTPUT, 3));
-
-        for (int i = 1; i < layers.size(); i++)
-        {
-            layers.get(i).addReferencetoPrevious(layers.get(i-1));
-        }
-    }
-
-    public Matrix getWeights()
-    {
-        return weights;
+        // We're no longer going to use the layer class
+        // layers.add(new NeuralNetLayer(LayerType.INPUT, 4));
+        //
+        // for (int i = 0; i < L; i++)
+        // {
+        //     layers.add(new NeuralNetLayer(LayerType.INTERNAL, 5));
+        // }
+        //
+        // layers.add(new NeuralNetLayer(LayerType.OUTPUT, 3));
+        //
+        // for (int i = 1; i < layers.size(); i++)
+        // {
+        //     layers.get(i).addReferencetoPrevious(layers.get(i-1));
+        // }
     }
 
     @Override

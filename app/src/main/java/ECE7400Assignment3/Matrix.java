@@ -44,7 +44,7 @@ public class Matrix
                             weights[tracker-1][j] = Double.parseDouble(w[j]);
                         }
                     }
-                    
+
                 } catch (NoSuchElementException e) {
                     System.out.println(e.getMessage());
                 }
@@ -54,7 +54,7 @@ public class Matrix
                     break;
                 }
             }
-            
+
         }
     }
 
